@@ -1,4 +1,4 @@
-#include <VPINetStream.h>
+#include "VPINetStream.h"
 
 #include <iostream>
 #include <fstream>

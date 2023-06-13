@@ -1,4 +1,5 @@
-#include <VPINetStream.h>
+#include "VPINetStream.h"
+#include <iostream>
 
 VPINetStream::VPINetStream()
 {
@@ -50,6 +51,8 @@ int VPINetStream::SendFrame(std::string encodedFrame)
     std::cout << "Error sending frame: " << e.what() << std::endl;
     return -1;
   }
+
+  return 0;
 }
 
 FrameData VPINetStream::ReceiveFrame()
