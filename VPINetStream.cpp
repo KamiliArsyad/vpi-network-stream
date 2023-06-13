@@ -3,6 +3,7 @@
 
 VPINetStream::VPINetStream()
 {
+  // Set up the ZMQ context
   context = zmq::context_t(1);
 }
 
@@ -20,6 +21,7 @@ VPINetStream::~VPINetStream()
 
 int VPINetStream::Init(int port)
 {
+  std::cout << "Initializing worker stream on port " << port << std::endl;
   assert(this->port == 0); // Make sure the port hasn't been set yet (can't reinitialize)
   this->port = port;
   socket = zmq::socket_t(context, zmq::socket_type::rep);
@@ -42,9 +44,13 @@ int VPINetStream::SendFrame(std::string encodedFrame)
   zmq::message_t request(encodedFrame.size());
   memcpy(request.data(), encodedFrame.c_str(), encodedFrame.size());
 
+  // TODO: What if there's no request? Add a buffer with a safe-distancing semaphore.
   try
   {
-    socket.send(request, zmq::send_flags::none);
+    std::cout << "Sending ..." << std::endl;
+    zmq::message_t temp;
+    socket.recv(temp, zmq::recv_flags::dontwait);
+    socket.send(request, zmq::send_flags::dontwait);
   }
   catch (zmq::error_t e)
   {

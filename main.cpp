@@ -116,6 +116,10 @@ int main(int argc, char *argv[])
         inputCamera >> frame; // Fetch a new frame from camera.
         vpiCall(vpiImageCreate, frame.cols, frame.rows, VPI_IMAGE_FORMAT_U8, 0, &vpiFrameGrayScale);
 
+        // Setup a worker stream
+        VPINetStream netStream;
+        netStream.Init(9999);
+
         // Create the output keypoint array.
         vpiCall(vpiArrayCreate,
                 orbParams.maxFeatures,
@@ -175,6 +179,13 @@ int main(int argc, char *argv[])
             // Stream it out
             int32_t numKeypoints;
             vpiCall(vpiArrayGetSize, keypoints, &numKeypoints);
+
+            // Encode
+            std::stringstream ss;
+            ss << numKeypoints << ";" << EncodeKeypoints(keypoints, descriptors, numKeypoints);
+
+            // Send
+            netStream.SendFrame(ss.str());
         }
 
         vpiArrayDestroy(keypoints);
