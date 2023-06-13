@@ -47,7 +47,6 @@ int VPINetStream::SendFrame(std::string encodedFrame)
   // TODO: What if there's no request? Add a buffer with a safe-distancing semaphore.
   try
   {
-    std::cout << "Sending ..." << std::endl;
     zmq::message_t temp;
     socket.recv(temp, zmq::recv_flags::dontwait);
     socket.send(request, zmq::send_flags::dontwait);
@@ -66,6 +65,10 @@ FrameData VPINetStream::ReceiveFrame()
   zmq::message_t reply;
   try
   {
+    zmq::message_t request(1);
+    memcpy(request.data(), "1", 1);
+    socket.send(request, zmq::send_flags::none);
+
     socket.recv(reply, zmq::recv_flags::none);
   }
   catch (zmq::error_t e)

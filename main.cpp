@@ -180,12 +180,8 @@ int main(int argc, char *argv[])
             int32_t numKeypoints;
             vpiCall(vpiArrayGetSize, keypoints, &numKeypoints);
 
-            // Encode
-            std::stringstream ss;
-            ss << numKeypoints << ";" << EncodeKeypoints(keypoints, descriptors, numKeypoints);
-
-            // Send
-            netStream.SendFrame(ss.str());
+            // Encode and Send
+            netStream.SendFrame(EncodeKeypoints(keypoints, descriptors, numKeypoints, i));
         }
 
         vpiArrayDestroy(keypoints);

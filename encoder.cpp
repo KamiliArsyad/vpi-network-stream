@@ -11,10 +11,10 @@
 #include <vpi/Array.h>
 #include <vpi/Stream.h>
 
-std::string EncodeKeypoints(VPIArray keypointsArray, VPIArray descriptorsArray, int numKeypoints)
+std::string EncodeKeypoints(VPIArray keypointsArray, VPIArray descriptorsArray, int numKeypoints, int frameNumber)
 {
   std::ostringstream ss;
-  ss << numKeypoints << ";";
+  ss << frameNumber << ";" << numKeypoints << ";"; 
 
   // Lock the arrays to access their data
   VPIArrayData keypointsData, descriptorsData;

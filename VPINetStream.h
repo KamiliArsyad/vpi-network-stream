@@ -20,10 +20,10 @@ struct FrameData
 /**
  * Function to encode the keypoints and their respective descriptors of a frame
  * into a single string. The format is as follows:
- * <numKeypoints>;<desc1>;<x1>,<y1>;<desc2>;<x2>,<y2>;...
+ * <frameNumber>;<numKeypoints>;<desc1>;<x1>,<y1>;<desc2>;<x2>,<y2>;...
  * The descriptors are encoded as 32 characters ASCII strings for efficiency.
  */
-std::string EncodeKeypoints(VPIArray keypointsArray, VPIArray descriptorsArray, int numKeypoints);
+std::string EncodeKeypoints(VPIArray keypointsArray, VPIArray descriptorsArray, int numKeypoints, int frameNumber);
 
 
 /**
