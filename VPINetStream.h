@@ -49,14 +49,14 @@ class VPINetStream
 
 
     /**
-     * Initialize a server stream.
+     * Initialize an edge/node/worker stream.
      * @param port The port to listen to.
      * @return 0 if successful, -1 otherwise.
      */
     int Init(int port);
 
     /**
-     * Initialize a client stream.
+     * Initialize a cloud/processing stream.
      * @param ip The ip to connect to.
      * @param port The port to connect to.
      * @return 0 if successful, -1 otherwise.
