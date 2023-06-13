@@ -4,6 +4,8 @@
 #include <bitset>
 #include <string>
 
+#include <zmq.hpp>
+
 /**
  * Struct to hold the data of a single frame.
  */
@@ -36,9 +38,15 @@ FrameData DecodeKeypoints(std::string encodedKeypoints);
  */
 class VPINetStream
 {
+  private:
+    zmq::context_t context;
+    zmq::socket_t socket;
+    int port = 0;
+    std::string ip;
   public:
     VPINetStream();
     ~VPINetStream();
+
 
     /**
      * Initialize a server stream.
